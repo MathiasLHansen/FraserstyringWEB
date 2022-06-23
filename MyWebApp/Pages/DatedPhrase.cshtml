@@ -1,0 +1,292 @@
+﻿@page
+@using MyWebApp.Models
+@model MyWebApp.Pages.DatedPhraseModel
+@{
+    ViewData["Title"] = "Dated phrase list";
+}
+
+<!--form method="post" class="card p-3">
+    <div class="row">
+        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="form-group mb0 align-middle">
+    </div>
+</form-->
+
+<!--table class="table mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Key</th>
+            <th scope="col">Phrase</th>
+            <th scope="col">Include</th>
+        </tr>
+    </thead>
+@foreach (var datedPhrase in Model.DatedPhrases)
+{
+            <tr>
+                <td>@datedPhrase.Key</td>
+                <td>@datedPhrase.DatedPhrases[0].phrase</td>
+                <td>
+                    <form method="get" asp-page-handler="Get" asp-route-id="@datedPhrase.Key">
+                        <button class=btn></button>
+                    </form>
+                </td>
+            </tr>
+}
+</table-->
+
+<body>
+    <form>
+        <p>Virksomhedstype</p>
+        <select name="virksomhedstype" id="virksomhedstype">
+            <option value="virksomhedstype.virksomhedsordning">Virksomhedsordning</option>
+            <option value="virksomhedstype.organisationsordning">Organisationsordning</option>
+            <option value="virksomhedstype.PFF">PFF</option>
+        </select>
+
+        <br><br><br>
+
+        <p>Indbetalingsfrekvens</p>
+        <select name="indbetalingsfrekvens" id="indbetalingsfrekvens">
+            <option value="indbetalingsfrekvens.månedlig">Månedlig</option>
+            <option value="indbetalingsfrekvens.årlig">Årlig</option>
+        </select>
+
+        <br><br><br>
+
+        <p>Depotsikringsmodel</p>
+        <select name="depotsikringsmodel" id="depotsikringsmodel">
+            <option value="depotsikringsmodel.nuværende">Nuværende model</option>
+            <option value="depotsikringsmodel.fuld">Fuld depotsikring (ikke solgt endnu)</option>
+        </select>
+
+        <br><br><br>
+
+        <p>Tilbagekøbsregel</p>
+        <select name="tilbagekøbsregel" id="tilbagekøbsregel">
+            <option value="tilbagekøbsregel.fuld">Fuld tilbagekøbsregel</option>
+            <option value="tilbagekøbsregel.bosættelse">Tilbagekøb ved bosættelse i udlandet</option>
+            <option value="tilbagekøbsregel.aftale">Tilbagekøb efter aftale med arbejdsgiver</option>
+            <option value="tilbagekøbsregel.ej">Tilbagekøb ej muligt</option>
+        </select>
+
+        <br><br><br>
+
+        <p>Antagelsesgruppe</p>
+        <select name="antagelsesgruppe" id="antagelsesgruppe">
+            <option value="antagelsesgruppe.obligatoriskAuto">Obligatorisk ordning med automatisk tilpasning</option>
+            <option value="antagelsesgruppe.obligatorisk">Obligatorisk ordning uden automatisk tilpasning</option>
+            <option value="antagelsesgruppe.frivilligAuto">Frivillig ordning med automatisk tilpasning</option>
+            <option value="antagelsesgruppe.frivillig">Frivillig ordning uden automatisk tilpasning</option>
+        </select>
+
+        <br><br><br>
+
+        <p>Dækningsgivende løn</p>
+        <select name="dækningsgivendeLøn" id="dækningsgivendeLøn">
+            <option value="dækningsgivendeLøn.lig">Dækningsgivende er lig den pensionsgivende</option>
+            <option value="dækningsgivendeLøn.forskellig">Dækningsgivende er forskellig fra den pensionsgivende</option>
+        </select>
+
+        <br><br><br>
+
+        <p>forebygger</p>
+        <select name="forebygger" id="forebygger">
+            <option value="forebygger.ja">Ja</option>
+            <option value="forebygger.nej">Nej</option>
+        </select>
+
+        <br><br><br>
+
+        <input type="checkbox" id="diagnose">
+        <label for="diagnose">Diagnose</label>
+
+        <br><br><br>
+
+        <p>Helbredssikring</p>
+        <select name="skat" id="skat">
+            <option value="skat.skatteopdelt">Skatteopdelt</option>
+            <option value="skat.skattepligtig">Skattepligtig</option>
+        </select>
+        <br>
+        <select name="HS" , id="HS">
+            <option value="HS.HS2017">HS 2017</option>
+            <option value="HS.HS2021">HS 2021</option>
+        </select>
+        <br>
+        <select name="misbrug" id="misbrug">
+            <option value="misbrug.med">Med misbrugsmodul</option>
+            <option value="misbrug.uden">Uden misbrugsmodul</option>
+        </select>
+        <br>
+        <input type="checkbox" id="fyskir">
+        <label for="fyskir">Valgfri fys/kir</label>
+        <br>
+        <select name="læge" id="læge">
+            <option value="læge.med">Fysioterapi med lægehenvisning</option>
+            <option value="læge.uden">Fysioterapi uden lægehenvisning</option>
+        </select>
+        <br>
+        <input type="checkbox" id="psykologimodul">
+        <label for="psykologimodul">Psykologimodul</label>
+        <br>
+        <input type="checkbox" id="psykiatermodul">
+        <label for="psykiatermodul">Psykiatermodul</label>
+        <br>
+        <select name="HSbørn" id="HSbørn">
+            <option value="HSbørn.med">Med HS til børn</option>
+            <option value="HSbørn.uden">Uden HS til børn</option>
+        </select>
+        <br>
+        <input type="checkbox" id="hsFrivillig">
+        <label for="hsFrivillig">Er HS helt eller delvis frivillig</label>
+        <br>
+        <select name="ludomani" id="ludomani">
+            <option value="ludomani.med">Med ludomani</option>
+            <option value="ludomani.uden">Uden ludomani</option>
+        </select>
+        <br><br>
+        <input type="button" value="Submit" onclick="getDocument()">
+    </form>
+
+</body>
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script>
+    function onSubmit() {
+        download('Vilkår.txt', generateText())
+    }
+
+    function generateKeywords() {
+        var text = "";
+        var virksomhedstype_dropdown = document.getElementById("virksomhedstype");
+        text = text + virksomhedstype_dropdown.value + ",";
+
+        var indbetalingsfrekvens_dropdown = document.getElementById("indbetalingsfrekvens");
+        text = text + indbetalingsfrekvens_dropdown.value + ",";
+
+        var depotsikringsmodel_dropdown = document.getElementById("depotsikringsmodel");
+        text = text + depotsikringsmodel_dropdown.value + ",";
+
+        var tilbagekøbsregel_dropdown = document.getElementById("tilbagekøbsregel");
+        text = text + tilbagekøbsregel_dropdown.value + ",";
+
+        var antagelsesgrupper_dropdown = document.getElementById("antagelsesgruppe");
+        text = text + antagelsesgrupper_dropdown.value + ",";
+
+        var dækningsgivendeLøn_dropdown = document.getElementById("dækningsgivendeLøn");
+        text = text + dækningsgivendeLøn_dropdown.value + ",";
+
+        var forebygger_dropdown = document.getElementById("forebygger");
+        text = text + forebygger_dropdown.value + ",";
+
+        var diagnose_checkbox = document.getElementById("diagnose");
+        if (diagnose_checkbox.checked) {
+            text = text + "diagnose.ja,"
+        } else {
+            text = text + "diagnose.nej,"
+        }
+
+        var skat_dropdown = document.getElementById("skat");
+        text = text + skat_dropdown.value + ",";
+
+        var HS_dropdown = document.getElementById("HS");
+        text = text + HS_dropdown.value + ",";
+
+        var misbrug_dropdown = document.getElementById("misbrug");
+        text = text + misbrug_dropdown.value + ",";
+
+        var fyskir_checkbox = document.getElementById("fyskir");
+        if (fyskir_checkbox.checked) {
+            text = text + "fyskir.ja,";
+        } else {
+            text = text + "fyskir.nej,";
+        }
+
+        var fysioterapi_dropdown = document.getElementById("fysioterapi");
+        text = text + fysioterapi_dropdown + ",";
+
+        var psykologimodul_checkbox = document.getElementById("psykologimodul");
+        if (psykologimodul_checkbox.checked) {
+            text = text + "psykologimodul.ja,";
+        } else {
+            text = text + "psykologimodul.nej,";
+        }
+
+        var psykiatermodul_checkbox = document.getElementById("psykiatermodul");
+        if (psykiatermodul_checkbox.checked) {
+            text = text + "psykiatermodul.ja,";
+        } else {
+            text = text + "psykiatermodul.nej,";
+        }
+
+        var HSbørn_dropdown = document.getElementById("HSbørn");
+        text = text + HSbørn_dropdown.value + ",";
+
+        var hsFrivillig_checkbox = document.getElementById("hsFrivillig");
+        if (hsFrivillig_checkbox.checked) {
+            text = text + "hsFrivillig.ja,";
+        } else {
+            text = text + "hsFrivillig.nej,";
+        }
+
+        var ludomani_dropdown = document.getElementById("ludomani");
+        text = text + ludomani_dropdown.value;
+
+        return text;
+    }
+
+
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+
+    function httpTest() {
+        const Http = new XMLHttpRequest();
+        const url = "https://localhost:7107/Api/Text/62972ee0f926a60d20c9faae";
+        Http.open("GET", url, true);
+        Http.setRequestHeader('Access-Control-Allow-Origin', '*')
+        //Http.withCredentials = true;
+        Http.send();
+
+        Http.onreadystatechange = (e) => {
+            console.log(Http.responseText);
+        }
+    }
+
+    function getDocument() {
+        const Http = new XMLHttpRequest();
+        const url = "https://localhost:7107/Api/DatedPhrase";
+        Http.open("POST", url, true);
+        Http.setRequestHeader('Access-Control-Allow-Origin', '*');
+        Http.responseType = 'blob';
+        //console.log(generateKeywords());
+        Http.send(generateKeywords());
+                
+        Http.onload = function(e){
+            if(this.status = 200){
+                var blob = Http.response
+                let a = document.createElement("a");
+                document.body.appendChild(a)
+                let url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "download.zip";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        }
+    }
+
+</script>
