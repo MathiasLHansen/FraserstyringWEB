@@ -149,6 +149,8 @@
         <input type="button" value="Submit" onclick="getDocument()">
     </form>
 
+
+
 </body>
 
 
@@ -156,10 +158,6 @@
 <partial name="_ValidationScriptsPartial" />
 }
 <script>
-    function onSubmit() {
-        download('Vilkår.txt', generateText())
-    }
-
     function generateKeywords() {
         var text = "";
         var virksomhedstype_dropdown = document.getElementById("virksomhedstype");
@@ -237,33 +235,6 @@
         text = text + ludomani_dropdown.value;
 
         return text;
-    }
-
-
-    function download(filename, text) {
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', filename);
-
-        element.style.display = 'none';
-        document.body.appendChild(element);
-
-        element.click();
-
-        document.body.removeChild(element);
-    }
-
-    function httpTest() {
-        const Http = new XMLHttpRequest();
-        const url = "https://localhost:7107/Api/Text/62972ee0f926a60d20c9faae";
-        Http.open("GET", url, true);
-        Http.setRequestHeader('Access-Control-Allow-Origin', '*')
-        //Http.withCredentials = true;
-        Http.send();
-
-        Http.onreadystatechange = (e) => {
-            console.log(Http.responseText);
-        }
     }
 
     function getDocument() {

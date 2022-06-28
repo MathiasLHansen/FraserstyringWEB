@@ -1,0 +1,94 @@
+@page
+@model SimpleModel
+@{
+    ViewData["Title"] = "Simple example form";
+}
+<head>
+    <link rel="stylesheet" href="simple.css">
+</head>
+<body>
+<div class="d-flex gap-5 justify-content-center">
+    <div>
+        <label for="virksomhedstype">Virksomhedstype</label>
+        <br>
+        <select name="virksomhedstype" id="virksomhedstype">
+            <option value="virksomhedstype.virksomhedsordning">Virksomhedsordning</option>
+            <option value="virksomhedstype.organisationsordning">Organisationsordning</option>
+            <option value="virksomhedstype.PFF">PFF</option>
+        </select>
+    </div>
+        <div>
+        <label for="indbetalingsfrekvens">Indbetalingsfrekvens</label>
+        <br>
+        <select name="indbetalingsfrekvens" id="indbetalingsfrekvens">
+            <option value="indbetalingsfrekvens.månedlig">Månedlig</option>
+            <option value="indbetalingsfrekvens.årlig">Årlig</option>
+        </select>
+    </div>
+</div>
+</br>
+<div class="d-flex gap-5 justify-content-center">
+    <div>
+        <label for="firmaNavn">Firmanavn:</label>
+        <input type="text" name="firmaNavn" id="firmaNavn">
+    </div>
+    <div>
+        <label for="personNavn">Navn på individ:</label>
+        <input type="text" name="personNavn" id="personNavn">
+    </div>
+</div>
+</br>
+<div class="d-flex gap-5 justify-content-center">
+    <input type="button" value="Submit" onclick="getDocument()">
+</div>
+
+</body>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script>
+    function generateKeywords() {
+        var text = "";
+        var virksomhedstype_dropdown = document.getElementById("virksomhedstype");
+        text = text + virksomhedstype_dropdown.value + ",";
+
+        var indbetalingsfrekvens_dropdown = document.getElementById("indbetalingsfrekvens");
+        text = text + indbetalingsfrekvens_dropdown.value;
+        
+        text = text + "-"
+
+        var firmaNavnText = document.getElementById("firmaNavn")
+        text = text + "firmaNavn=" + firmaNavnText.value + ",";
+
+        var personNavnText = document.getElementById("personNavn")
+        text = text + "personNavn=" + personNavnText.value;
+
+        return text;
+    }
+
+    function getDocument() {
+        const Http = new XMLHttpRequest();
+        const url = "https://localhost:7107/Api/DatedPhrase";
+        Http.open("POST", url, true);
+        Http.setRequestHeader('Access-Control-Allow-Origin', '*');
+        Http.responseType = 'blob';
+        //console.log(generateKeywords());
+        Http.send(generateKeywords());
+                
+        Http.onload = function(e){
+            if(this.status = 200){
+                var blob = Http.response
+                let a = document.createElement("a");
+                document.body.appendChild(a)
+                let url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "download.zip";
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        }
+    }
+
+</script>
+
